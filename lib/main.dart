@@ -114,6 +114,7 @@ class _InitScreenState extends State<InitScreen> {
               height: 50,
             ),
             TextButton(
+              key: Key("masuk"),
               onPressed: () => Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => MainHome())),
               child: DefaultTextStyle(
