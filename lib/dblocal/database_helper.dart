@@ -77,12 +77,8 @@ class DbHelper {
           await insertProductDetail(jsonDecode(paramDetail));
         }
       } else {
-        print("tidak loop");
+
       }
-      print("servis");
-      print(finalProductElement.length);
-      print("sqlite");
-      print(paramHeader);
     }
   }
 

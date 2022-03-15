@@ -50,6 +50,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 emit(HomeLoaded(
                     finalProductElement, limit, page, productDetail));
               }
+            }else{
+              emit(HomeError("error"));
             }
           } catch (e) {
             page--;
