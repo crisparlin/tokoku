@@ -21,14 +21,13 @@ class _MainHomeState extends State<MainHome> {
     super.initState();
   }
 
+
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      home: MainMaster(
-        child: MultiBlocProvider(providers: [
-          BlocProvider(create: (context) => homeBloc),
-        ],child: HomeContent()),
-      )
+    return MainMaster(
+      child: MultiBlocProvider(providers: [
+        BlocProvider(create: (context) => homeBloc),
+      ],child: HomeContent()),
     );
   }
 }

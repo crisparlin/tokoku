@@ -79,6 +79,7 @@ class _ProductDetailContentState extends State<ProductDetailContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: Key("detail"),
       appBar: AppBar(
           iconTheme: const IconThemeData(
             color: Colors.black, //change your color here

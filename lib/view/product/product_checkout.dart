@@ -54,7 +54,7 @@ class _ProductCheckoutState extends State<ProductCheckout> {
         child: Scaffold(
           appBar: AppBar(
               iconTheme: const IconThemeData(
-                color: Colors.black, //change your color here
+                color: Colors.white, //change your color here
               ),
               backgroundColor: Colors.white,
               title: Text(

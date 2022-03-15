@@ -39,18 +39,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             if (productElement.length > 0) {
               for (var item in productElement) {
                 var reslut = await servisTokoKu.getListDetail(item.prdNo);
-                var paramHeader = productElemetToJson(item);
-                var paramDetail = productDetailToJson(reslut);
-                var countHeader =   await dbHelper.getCountHeader();
-                var countDetail =   await dbHelper.getCountDetail();
-                if(countHeader != productElement.length){
-                  await dbHelper.insertProduct(jsonDecode(paramHeader));
-                }
                 reslut.toJson().forEach((k, v) =>
                     productDetail.add(ProductDetail(product: reslut.product)));
-                if(countDetail != productDetail.length){
-                  await dbHelper.insertProductDetail(jsonDecode(paramDetail));
-                }
               }
               if (productElement == null) {
                 page--;

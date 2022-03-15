@@ -15,8 +15,7 @@ void main() {
         create: (context) => MenuController(),
       ),
       BlocProvider<HomeBloc>(
-        create: (context) =>
-            HomeBloc(),
+        create: (context) => HomeBloc(),
       ),
     ],
     child: const MyApp(),
@@ -67,77 +66,95 @@ class _InitScreenState extends State<InitScreen> {
   void initState() {
     super.initState();
     initDatabase();
+    Future.delayed(Duration(seconds: 5)).then((value) => Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WelcomeScreen())));
   }
 
   initDatabase() {
     _dbHelper.initDatabase();
+    _dbHelper.initDataOffline();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    return MaterialApp(
+      color: Colors.white,
+      home: Container(
         color: Colors.white,
-        child: ListView(
-          children: [
-
-            Lottie.asset(
-                'assets/images/shopping.json',
+        child: Center(
+            child: Lottie.asset('assets/images/loading.json',
                 // fit: BoxFit.fitHeight,
-                height: 400),
-            const SizedBox(
-              height: 50,
-            ),
-            DefaultTextStyle(
-              style: poppinsTextFont.copyWith(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700),
-              child: const Text("Let's improve your style"),
-              overflow: TextOverflow.fade,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            DefaultTextStyle(
-              style: poppinsTextFont.copyWith(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
-              child: const Text(
-                  "Find cool style to support your daily acrivities"),
-              overflow: TextOverflow.fade,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            TextButton(
-              key: Key("masuk"),
-              onPressed: () => Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => MainHome())),
-              child: DefaultTextStyle(
+                height: 400)),
+      ),
+    );
+  }
+}
+
+class WelcomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          color: Colors.white,
+          child: ListView(
+            children: [
+              Lottie.asset('assets/images/shopping.json',
+                  // fit: BoxFit.fitHeight,
+                  height: 400),
+              const SizedBox(
+                height: 50,
+              ),
+              DefaultTextStyle(
                 style: poppinsTextFont.copyWith(
-                    fontSize: 16,
-                    color: Colors.white,
+                    fontSize: 20,
+                    color: Colors.black,
                     fontWeight: FontWeight.w700),
-                child: const Text("Get Started"),
+                child: const Text("Let's improve your style"),
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
               ),
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(color: Colors.black)))),
-            )
-          ],
-        ));
+              const SizedBox(
+                height: 10,
+              ),
+              DefaultTextStyle(
+                style: poppinsTextFont.copyWith(
+                    fontSize: 12,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400),
+                child: const Text(
+                    "Find cool style to support your daily acrivities"),
+                overflow: TextOverflow.fade,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              TextButton(
+                key: Key("masuk"),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MainHome())),
+                child: DefaultTextStyle(
+                  style: poppinsTextFont.copyWith(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                  child: const Text("Get Started"),
+                  overflow: TextOverflow.fade,
+                  textAlign: TextAlign.center,
+                ),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(color: Colors.black)))),
+              )
+            ],
+          )),
+    );
   }
-
 }

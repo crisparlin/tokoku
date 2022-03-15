@@ -1,9 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tokoku/model/product_detail_model.dart';
+import 'package:tokoku/model/product_model.dart';
+import 'package:tokoku/servis/product_servis.dart';
 
 class DbHelper {
   Database db;
@@ -42,6 +47,42 @@ class DbHelper {
       db = await openDatabase(path);
       int _dbVesrion = await db.getVersion();
       print("check db version $_dbVesrion");
+    }
+  }
+
+  List<ProductElement> productElement = [];
+  List<ProductElement> finalProductElement = [];
+  List<ProductDetail> productDetail = [];
+
+  initDataOffline() async {
+    final ServisTokoKu servisTokoKu = ServisTokoKu();
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var paramHeader = await getCountHeader();
+
+      for (var i = 1; i <= 4; i++) {
+        productElement = await servisTokoKu.getListProduct(i);
+        print(productElement.length);
+        finalProductElement.addAll(productElement);
+      }
+      if (finalProductElement.length != paramHeader) {
+        for (var item in finalProductElement) {
+          var reslut = await servisTokoKu.getListDetail(item.prdNo);
+          var paramHeader = productElemetToJson(item);
+          var paramDetail = productDetailToJson(reslut);
+          await insertProduct(jsonDecode(paramHeader));
+          reslut.toJson().forEach((k, v) =>
+              productDetail.add(ProductDetail(product: reslut.product)));
+          await insertProductDetail(jsonDecode(paramDetail));
+        }
+      } else {
+        print("tidak loop");
+      }
+      print("servis");
+      print(finalProductElement.length);
+      print("sqlite");
+      print(paramHeader);
     }
   }
 

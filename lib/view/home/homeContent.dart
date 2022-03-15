@@ -32,13 +32,17 @@ class _HomeContentState extends State<HomeContent> {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is HomeLoaded) {}
+        if (state is HomeLoaded) {
+
+        }
       },
       child: Scaffold(
+        key: Key("home"),
           appBar: AppBar(
+            leading:const Icon(Icons.search,color: Colors.grey,),
             backgroundColor: Colors.white,
             title: ListTile(
-              leading: const Icon(Icons.search),
+              // leading: const Icon(Icons.search),
               title: TextFormField(
                 controller: _filter,
                 // ignore: unnecessary_const
@@ -178,6 +182,7 @@ class _ContentListProductState extends State<ContentListProduct> {
           });
         }
         if (state is HomeError) {
+          loading = false;
           _refreshController.loadComplete();
         }
       },
